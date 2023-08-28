@@ -3,8 +3,8 @@
 <div align="center">
   <a href="https://github.com/nihaladoni/movieTMDB">
 
-<img src="./public/pwa-512x512.png" alt="Logo" width="80" height="80" />
-
+<img src="/pwa-512x512.png" alt="Logo" width="80" height="80" />
+https://github.com/nihaladoni/movieTMDB/blob/main/public/pwa-192x192.png
 </a>
 
 <h2 align="center">movieTMDB</h2>

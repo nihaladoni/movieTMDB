@@ -48,7 +48,7 @@ export const CardGridLayout = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   grid-gap: 15px;
   @media screen and (max-width: 480px) {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
     grid-gap: 10px;
   }
 `

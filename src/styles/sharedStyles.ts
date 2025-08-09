@@ -64,7 +64,9 @@ export const HeadingTitle = styled.h1`
 `
 
 export const Wrapper = styled.div`
-  padding: 80px 0;
+  @media (min-width: 480px) {
+    padding: 80px 0;
+  }
 `
 
 export const CategoryMainLayout = styled.div`

@@ -2,12 +2,18 @@ import styled from 'styled-components'
 export const NavbarMainContainer = styled.nav<{ hasScrolled?: boolean }>`
   transition: background-color 0.5s ease-out;
   background-color: ${props => (props.hasScrolled ? '#13131d' : 'transparent')};
-  height: 70px;
+
   width: 100%;
   position: fixed;
   top: 0px;
   left: 0px;
   z-index: 100;
+  display: none;
+
+  @media (min-width: 480px) {
+    display: flex;
+    height: 70px;
+  }
 `
 
 export const NavbarContainer = styled.div`

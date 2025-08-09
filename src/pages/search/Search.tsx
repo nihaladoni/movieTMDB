@@ -55,7 +55,7 @@ const Search = () => {
         <Styled.InputFieldWrapper>
           <Styled.InputField
             type='text'
-            placeholder='Search'
+            placeholder='Search Movies or TV Series. Example tom and jerry'
             onChange={handleDebounce}
           />
           <Styled.IconWrapper>

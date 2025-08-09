@@ -44,9 +44,7 @@ const Cast = () => {
                     />
                   </Styled.CastImageContainer>
                   <Styled.CastName title={cast?.name}>
-                    {cast?.name
-                      ? handlePrecision(cast?.name, 10)
-                      : 'No Picture'}
+                    {cast?.name}
                   </Styled.CastName>
                 </Styled.CastContainer>
               ))}

@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
+import { Link } from 'react-router-dom'
+import styled, { keyframes } from 'styled-components'
 
 export const Container = styled.div<any>`
   position: relative;
-  width: ${(props) => (props.width ? props.width : "100%")};
+  width: ${props => (props.width ? props.width : '100%')};
   padding-right: var(1.5rem, 0.75rem);
   padding-left: var(1.5rem, 0.75rem);
   margin-right: auto;
@@ -23,7 +23,7 @@ export const Container = styled.div<any>`
   @media (min-width: 1400px) {
     max-width: 1320px;
   }
-`;
+`
 
 const opacityAnimation = keyframes`
 0% {
@@ -33,15 +33,15 @@ const opacityAnimation = keyframes`
   100% {
     opacity: 1;
   }
-`;
+`
 
 export const OpacityAnimation = styled.div<any>`
   animation: ${opacityAnimation} 1.5s;
-`;
+`
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
-`;
+`
 
 export const CardGridLayout = styled.div`
   display: grid;
@@ -51,7 +51,7 @@ export const CardGridLayout = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     grid-gap: 10px;
   }
-`;
+`
 
 export const HeadingTitle = styled.h1`
   margin: 20px 0;
@@ -61,11 +61,11 @@ export const HeadingTitle = styled.h1`
     font-size: 24px;
     margin: 10px 0;
   }
-`;
+`
 
 export const Wrapper = styled.div`
   padding: 80px 0;
-`;
+`
 
 export const CategoryMainLayout = styled.div`
   display: flex;
@@ -73,7 +73,7 @@ export const CategoryMainLayout = styled.div`
   padding: 20px 0;
   gap: 20px;
   flex-wrap: wrap;
-`;
+`
 
 export const SkeletonLoadingAnimation = () => keyframes`
   0% {
@@ -82,11 +82,11 @@ export const SkeletonLoadingAnimation = () => keyframes`
   100% {
     background: #7A798A;
   }
-`;
+`
 
 export const LoadingSpinnerContainer = styled.div`
   width: 100%;
-  aspect-ratio: 1/1.5;
+  aspect-ratio: 1;
   border-radius: 10px;
   animation: ${SkeletonLoadingAnimation} 1s linear infinite alternate !important;
-`;
+`

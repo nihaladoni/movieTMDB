@@ -11,22 +11,24 @@ const MovieCard = ({ poster, name, date, vote, mediaType }: any) => {
           alt='image'
         />
       </Styled.MovieCardImageContainer>
-      {console.log('date===[log]===>', date)}
+
       <Styled.MovieName title={name}>{name}</Styled.MovieName>
       <Styled.MovieCardFooterWrapper>
         <Styled.MovieReleaseDate>
           {mediaType === 'tv' ? 'TV Series' : 'Movie'}
         </Styled.MovieReleaseDate>
-        <Styled.MovieReleaseDate>
-          {new Intl.DateTimeFormat('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          }).format(new Date(date))}
-        </Styled.MovieReleaseDate>
+        {date && (
+          <Styled.MovieReleaseDate>
+            {new Intl.DateTimeFormat('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            }).format(new Date(date))}
+          </Styled.MovieReleaseDate>
+        )}
       </Styled.MovieCardFooterWrapper>
       <Styled.RatingContainer vote={Number(vote) > 7}>
-        {vote.toFixed(1)}
+        {vote?.toFixed(1)}
       </Styled.RatingContainer>
     </Styled.MovieCardMainLayout>
   )

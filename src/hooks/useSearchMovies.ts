@@ -8,7 +8,7 @@ const getAllSearchMovies = async ({ pageParam = 1, queryKey }: any) => {
     `${apiUrl}/search/${
       options?.searchTab === 'movies' ? 'movie' : 'tv'
     }?&language=en-US&query=${
-      options?.searchValue === '' ? 'spider' : options?.searchValue
+      options?.searchValue === '' ? 'tom and jerry' : options?.searchValue
     }&page=${pageParam}&include_adult=false`,
     {
       headers: {

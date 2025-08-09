@@ -7,6 +7,7 @@ import { useGetMovieDetails } from '../../hooks/useMovieDetails'
 import * as SharedStyled from '../../styles/sharedStyles'
 import { img_500, noPicture } from '../../utils/apiUrl'
 import * as Styled from './MovieDetails.style'
+import { minutesToHoursMinutes } from '../../utils/utils'
 
 const MovieDetails = () => {
   const { id } = useParams()
@@ -76,7 +77,15 @@ const MovieDetails = () => {
                   <Styled.MovieDetailsGenre>
                     Release Date:{' '}
                     <div>
-                      {moviesData?.release_date || moviesData?.last_air_date}
+                      {new Intl.DateTimeFormat('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      }).format(
+                        new Date(
+                          moviesData?.release_date || moviesData?.last_air_date
+                        )
+                      )}
                     </div>
                   </Styled.MovieDetailsGenre>
                   <Styled.MovieDetailsGenre>
@@ -90,30 +99,36 @@ const MovieDetails = () => {
                   <Styled.MovieDetailsGenre>
                     Runtime:{' '}
                     <div>
-                      {moviesData?.runtime || moviesData?.episode_run_time[0]}{' '}
-                      minutes
+                      {minutesToHoursMinutes(
+                        moviesData?.runtime || moviesData?.episode_run_time[0]
+                      )}
                     </div>
                   </Styled.MovieDetailsGenre>
-                  <Styled.ButtonWrapper>
-                    <SharedStyled.StyledLink
-                      to={`/cast/${id}?media_type=${media_type}`}
-                    >
-                      <Styled.WatchTrailerButton bg='#4AB8A1'>
-                        Cast and Crew
-                      </Styled.WatchTrailerButton>
-                    </SharedStyled.StyledLink>
-                  </Styled.ButtonWrapper>
-                  <Styled.ButtonWrapper>
-                    <a
-                      target='_blank'
-                      href={`https://www.youtube.com/watch?v=${videoData?.results[0]?.key}`}
-                    >
-                      <Styled.WatchTrailerButton bg='#b269f6'>
-                        <BsYoutube style={{ marginRight: '8px' }} />
-                        Watch Trailer
-                      </Styled.WatchTrailerButton>
-                    </a>
-                  </Styled.ButtonWrapper>
+                  <Styled.ButtonCont>
+                    <Styled.ButtonWrapper>
+                      <SharedStyled.StyledLink
+                        to={`/cast/${id}?media_type=${media_type}`}
+                        onClick={() => window.scrollTo(0, 0)}
+                      >
+                        <Styled.WatchTrailerButton bg='#4AB8A1'>
+                          Cast and Crew
+                        </Styled.WatchTrailerButton>
+                      </SharedStyled.StyledLink>
+                    </Styled.ButtonWrapper>
+                    {videoData?.results[0]?.key && (
+                      <Styled.ButtonWrapper>
+                        <a
+                          target='_blank'
+                          href={`https://www.youtube.com/watch?v=${videoData?.results[0]?.key}`}
+                        >
+                          <Styled.WatchTrailerButton bg='#b269f6'>
+                            <BsYoutube style={{ marginRight: '8px' }} />
+                            Watch Trailer
+                          </Styled.WatchTrailerButton>
+                        </a>
+                      </Styled.ButtonWrapper>
+                    )}
+                  </Styled.ButtonCont>
                 </Styled.MovieDetailsRightContainer>
               </Styled.MovieDetailsContainer>
             )}

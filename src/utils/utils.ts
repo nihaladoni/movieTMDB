@@ -1,19 +1,24 @@
 export const debounce = (fn: any, delay: number) => {
-  let timer: any;
+  let timer: any
 
   return (...args: any) => {
-    clearTimeout(timer);
+    clearTimeout(timer)
     timer = setTimeout(() => {
-      fn.apply(this, args);
-    }, delay);
-  };
-};
+      fn.apply(this, args)
+    }, delay)
+  }
+}
 
 export const handlePrecision = (val: any, len: number) => {
-  const testVal = String(val);
+  const testVal = String(val)
   if (testVal.length >= len) {
-    return `${testVal.slice(0, len)}...`;
+    return `${testVal.slice(0, len)}...`
   }
-  return testVal;
-};
+  return testVal
+}
 
+export const minutesToHoursMinutes = (totalMinutes: number) => {
+  const hours = Math.floor(totalMinutes / 60)
+  const minutes = totalMinutes % 60
+  return `${hours ? `${hours}h` : ''}${minutes}m`
+}

@@ -21,7 +21,7 @@ export const NavbarContainer = styled.div`
 export const RightSection = styled.div`
   width: max-content;
   margin-left: auto;
-  gap: 40px;
+  gap: 16px;
   justify-content: flex-end;
   display: none;
 
@@ -67,7 +67,7 @@ export const Logo = styled.img`
 `
 
 export const Heading = styled.div`
-  font-size: 35px;
+  font-size: 24px;
   color: #fff;
   transition: all 0.3s linear;
   :hover {

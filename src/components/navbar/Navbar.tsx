@@ -40,18 +40,22 @@ const Navbar = () => {
     >
       <Container width='90%'>
         <Styled.NavbarContainer>
-          <StyledLink to='/'>
+          <StyledLink to='/' onClick={() => window.scrollTo(0, 0)}>
             <Styled.LogoWrapper>
               <Styled.Logo src={logo} alt='logo' />
             </Styled.LogoWrapper>
           </StyledLink>
-          <StyledLink to='/'>
+          <StyledLink to='/' onClick={() => window.scrollTo(0, 0)}>
             <Styled.Heading>MovieTMDB</Styled.Heading>
           </StyledLink>
 
           <Styled.RightSection>
             {LINKS?.map(link => (
-              <NavLink to={link.path} key={link.path}>
+              <NavLink
+                to={link.path}
+                key={link.path}
+                onClick={() => window.scrollTo(0, 0)}
+              >
                 {link.name}
               </NavLink>
             ))}

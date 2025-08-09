@@ -27,15 +27,23 @@ export const RightSection = styled.div`
 
   a {
     text-decoration: none;
-    color: white;
-    font-weight: 500;
+    color: #fff;
+    font-weight: 600;
+
+    padding: 8px 18px;
+    border-radius: 12px;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
     :hover {
-      filter: brightness(75%);
+      background: rgba(178, 105, 246, 0.12);
+      color: #b269f6;
+      box-shadow: 0 2px 8px 0 rgba(178, 105, 246, 0.1);
     }
   }
 
   .active {
-    color: #b269f6;
+    color: #fff;
+    background: linear-gradient(90deg, #b269f6 0%, #6e8efb 100%);
+    box-shadow: 0 2px 12px 0 rgba(178, 105, 246, 0.18);
   }
 
   @media (min-width: 1024px) {

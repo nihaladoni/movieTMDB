@@ -4,6 +4,7 @@ import { Container, StyledLink } from '../../styles/sharedStyles'
 import * as Styled from './Navbar.style'
 import logo from '../../assets/logo.svg'
 import useScrollValue from '../../hooks/useScrollValue'
+import useScrollDirection from '../../hooks/useScrollDirection'
 
 const LINKS = [
   {
@@ -26,9 +27,17 @@ const LINKS = [
 
 const Navbar = () => {
   const { value } = useScrollValue()
+  const scrollDir = useScrollDirection()
 
   return (
-    <Styled.NavbarMainContainer hasScrolled={value > 30}>
+    <Styled.NavbarMainContainer
+      hasScrolled={value > 30}
+      style={{
+        transform: scrollDir === 'down' ? 'translateY(-100%)' : 'translateY(0)',
+        transition:
+          'transform 0.4s cubic-bezier(0.4,0,0.2,1), background-color 0.5s, box-shadow 0.5s',
+      }}
+    >
       <Container width='90%'>
         <Styled.NavbarContainer>
           <StyledLink to='/'>

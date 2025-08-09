@@ -29,9 +29,9 @@ export const MovieInfoContainer = styled.div`
 export const InfoDiv = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 32px;
   justify-content: center;
-  color: white;
+  color: #fff;
   font-weight: 400;
   flex: 1;
 

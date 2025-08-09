@@ -20,5 +20,5 @@ export const handlePrecision = (val: any, len: number) => {
 export const minutesToHoursMinutes = (totalMinutes: number) => {
   const hours = Math.floor(totalMinutes / 60)
   const minutes = totalMinutes % 60
-  return `${hours ? `${hours}h` : ''}${minutes}m`
+  return `${hours ? `${hours}h ` : ''}${minutes}m`
 }

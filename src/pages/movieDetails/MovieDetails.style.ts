@@ -48,7 +48,8 @@ export const MovieDetailsLeftContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(24, 26, 38, 0.7);
+  justify-content: flex-start;
+
   @media screen and (max-width: 900px) {
     padding: 24px 10px 10px 10px;
   }
@@ -57,9 +58,13 @@ export const MovieDetailsRightContainer = styled.div`
   padding: 32px 32px 32px 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   @media screen and (max-width: 900px) {
     padding: 10px;
+  }
+
+  @media (max-width: 480px) {
+    padding-bottom: 70px;
   }
 `
 
@@ -168,7 +173,10 @@ export const WatchTrailerButton = styled.button<any>`
   }
   @media screen and (max-width: 1024px) {
     font-size: 16px;
-    height: 40px;
+  }
+  @media screen and (max-width: 425px) {
+    font-size: 12px;
+    height: 32px;
   }
 `
 
@@ -201,7 +209,7 @@ export const MovieDetailsGenre = styled.div`
   color: #fff;
   font-size: 18px;
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;

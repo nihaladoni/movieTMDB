@@ -22,12 +22,17 @@ export const CastImage = styled.img`
   aspect-ratio: 1/1.5;
   border-radius: 10px;
 `
-export const CastName = styled.div`
+export const CastName = styled.div<{
+  textAlign?: 'left' | 'center' | 'right'
+  margin?: string
+}>`
   font-size: 16px;
   color: #fff;
   font-weight: 400;
   text-overflow: ellipsis;
   overflow: hidden;
+  text-align: ${({ textAlign }) => textAlign || 'left'};
+  margin: ${({ margin }) => margin || '0'};
   white-space: nowrap;
   padding: 4px 0;
 `

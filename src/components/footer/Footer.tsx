@@ -38,7 +38,11 @@ const Footer = () => {
       <Container width='90%'>
         <Styled.FooterContainer>
           {NAV_TAB.map(tab => (
-            <StyledLink key={tab?.label} to={tab?.link}>
+            <StyledLink
+              key={tab?.label}
+              to={tab?.link}
+              onClick={() => window.scrollTo(0, 0)}
+            >
               <Styled.FooterNavTabs>
                 <Styled.FooterIcon pathname={pathname === tab?.link}>
                   {tab?.logo}

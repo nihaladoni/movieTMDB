@@ -32,6 +32,9 @@ const MovieDetails = () => {
     isLoading: videoLoading,
   } = useGetVideo(options)
 
+  const isAndroid = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+  const runtime = moviesData?.runtime || moviesData?.episode_run_time?.[0]
   return (
     <SharedStyled.Container width='90%'>
       <SharedStyled.OpacityAnimation>
@@ -65,9 +68,11 @@ const MovieDetails = () => {
                   <Styled.MovieDetailsSubTitle>
                     {moviesData?.tagline}
                   </Styled.MovieDetailsSubTitle>
-                  <Styled.MovieDetailsDescription>
-                    {moviesData?.overview}
-                  </Styled.MovieDetailsDescription>
+                  {moviesData?.overview && (
+                    <Styled.MovieDetailsDescription>
+                      {moviesData?.overview}
+                    </Styled.MovieDetailsDescription>
+                  )}
                   <Styled.MovieDetailsGenre>
                     Genre:
                     {moviesData?.genres?.map((value: any) => (
@@ -96,14 +101,11 @@ const MovieDetails = () => {
                       )
                     )}
                   </Styled.MovieDetailsGenre>
-                  <Styled.MovieDetailsGenre>
-                    Runtime:{' '}
-                    <div>
-                      {minutesToHoursMinutes(
-                        moviesData?.runtime || moviesData?.episode_run_time[0]
-                      )}
-                    </div>
-                  </Styled.MovieDetailsGenre>
+                  {runtime && (
+                    <Styled.MovieDetailsGenre>
+                      Runtime: <div>{minutesToHoursMinutes(runtime)}</div>
+                    </Styled.MovieDetailsGenre>
+                  )}
                   <Styled.ButtonCont>
                     <Styled.ButtonWrapper>
                       <SharedStyled.StyledLink
@@ -119,7 +121,11 @@ const MovieDetails = () => {
                       <Styled.ButtonWrapper>
                         <a
                           target='_blank'
-                          href={`https://www.youtube.com/watch?v=${videoData?.results[0]?.key}`}
+                          href={
+                            isAndroid
+                              ? `vnd.youtube:${videoData?.results?.[0]?.key}`
+                              : `https://www.youtube.com/watch?v=${videoData?.results[0]?.key}`
+                          }
                         >
                           <Styled.WatchTrailerButton bg='#b269f6'>
                             <BsYoutube style={{ marginRight: '8px' }} />

@@ -49,6 +49,15 @@ const Cast = () => {
                 </Styled.CastContainer>
               ))}
 
+            {!castError &&
+              !castLoading &&
+              !castFetching &&
+              castData?.cast?.length === 0 && (
+                <Styled.CastName textAlign='center' margin='20px 0'>
+                  No cast found
+                </Styled.CastName>
+              )}
+
             {(castLoading || castFetching) &&
               Array.from({ length: 30 }, (x, v) => (
                 <SharedStyled.LoadingSpinnerContainer key={v} />

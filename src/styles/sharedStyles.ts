@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 
+type FlexProps =
+  | 'center'
+  | 'flex-start'
+  | 'flex-end'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly'
+
 export const Container = styled.div<any>`
   position: relative;
   width: ${props => (props.width ? props.width : '100%')};
@@ -91,4 +99,24 @@ export const LoadingSpinnerContainer = styled.div`
   aspect-ratio: 1;
   border-radius: 10px;
   animation: ${SkeletonLoadingAnimation} 1s linear infinite alternate !important;
+`
+export const Flex = styled.div<{
+  alignItems?: FlexProps
+  justifyContent?: FlexProps
+  gap?: string
+  margin?: string
+  padding?: string
+  flexDirection?: string
+  cover?: boolean
+  flexWrap?: boolean
+}>`
+  display: flex;
+  height: ${props => (props.cover ? '100vh' : 'auto')};
+  flex-direction: ${props => props.flexDirection || 'row'};
+  align-items: ${props => props.alignItems || 'stretch'};
+  justify-content: ${props => props.justifyContent || 'flex-start'};
+  flex-wrap: ${props => (props.flexWrap ? 'wrap' : 'nowrap')};
+  gap: ${props => props.gap || '0'};
+  margin: ${props => props.margin || '0'};
+  padding: ${props => props.padding || '0'};
 `

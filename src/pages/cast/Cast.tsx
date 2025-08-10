@@ -27,12 +27,12 @@ const Cast = () => {
     <SharedStyled.Container width='90%'>
       <SharedStyled.OpacityAnimation>
         <SharedStyled.Wrapper>
-          <SharedStyled.HeadingTitle>CAST AND CREW</SharedStyled.HeadingTitle>
+          <SharedStyled.HeadingTitle>CAST </SharedStyled.HeadingTitle>
           <Styled.CastMainLayout>
             {!castError &&
               !castLoading &&
               castData?.cast?.map((cast: any, index: number) => (
-                <Styled.CastContainer key={index}>
+                <Styled.CastContainer key={cast?.id}>
                   <Styled.CastImageContainer>
                     <Styled.CastImage
                       src={
@@ -44,7 +44,8 @@ const Cast = () => {
                     />
                   </Styled.CastImageContainer>
                   <Styled.CastName title={cast?.name}>
-                    {cast?.name}
+                    {cast?.name} <br />
+                    <i>{cast?.character}</i>
                   </Styled.CastName>
                 </Styled.CastContainer>
               ))}

@@ -5,13 +5,22 @@ import MovieCard from '../../components/movieCard/MovieCard'
 import NoItemFound from '../../components/noItemFound/NoItemFound'
 import { useTvSeries } from '../../hooks/useTvSeries'
 import * as SharedStyled from '../../styles/sharedStyles'
+import { useSearchParams } from 'react-router-dom'
 
 const TVSeries = () => {
   const [genres, setGenres] = useState([])
-  const [selectedGenres, setSelectedGenres] = useState([])
-  const selectedData = selectedGenres
-    .map((results: any) => results?.id)
-    .join(',')
+  const [selectedGenres, setSelectedGenres] = useState<number[]>([])
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  useEffect(() => {
+    if (selectedGenres?.length) {
+      setSearchParams({ genres: encodeURIComponent(selectedGenres.join(',')) })
+    } else {
+      setSearchParams({})
+    }
+  }, [selectedGenres?.length])
+
+  const selectedData = selectedGenres?.join(',')
   const {
     data,
     isError,
@@ -43,7 +52,6 @@ const TVSeries = () => {
     <SharedStyled.Container width='90%'>
       <SharedStyled.OpacityAnimation>
         <SharedStyled.Wrapper>
-          <SharedStyled.HeadingTitle>TV SERIES</SharedStyled.HeadingTitle>
           <SharedStyled.CategoryMainLayout>
             <Category
               type='tv'

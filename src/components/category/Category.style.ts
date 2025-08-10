@@ -1,10 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-export const CategoryContainer = styled.div`
+export const CategoryContainer = styled.div<{
+  isSelected: boolean
+}>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fafafa;
+  background-color: ${({ isSelected }) => (isSelected ? '#b269f6' : '#fafafa')};
+  color: ${({ isSelected }) => (isSelected ? '#fff' : '#000')};
   border-radius: 40px;
   height: 30px;
   width: max-content;
@@ -15,4 +18,19 @@ export const CategoryContainer = styled.div`
   @media screen and (max-width: 480px) {
     font-size: 16px;
   }
-`;
+`
+export const Summary = styled.summary`
+  cursor: pointer;
+  user-select: none;
+
+  div {
+    user-select: none;
+  }
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+  &::marker {
+    content: '';
+  }
+`

@@ -113,18 +113,19 @@ const MovieDetails = () => {
                         onClick={() => window.scrollTo(0, 0)}
                       >
                         <Styled.WatchTrailerButton bg='#4AB8A1'>
-                          Cast and Crew
+                          Cast
                         </Styled.WatchTrailerButton>
                       </SharedStyled.StyledLink>
                     </Styled.ButtonWrapper>
-                    {videoData?.results[0]?.key && (
+                    {videoData?.key && (
                       <Styled.ButtonWrapper>
                         <a
                           target='_blank'
+                          rel='noopener noreferrer'
                           href={
                             isAndroid
-                              ? `vnd.youtube:${videoData?.results?.[0]?.key}`
-                              : `https://www.youtube.com/watch?v=${videoData?.results[0]?.key}`
+                              ? `vnd.youtube:${videoData?.key}`
+                              : `https://www.youtube.com/watch?v=${videoData?.key}`
                           }
                         >
                           <Styled.WatchTrailerButton bg='#b269f6'>

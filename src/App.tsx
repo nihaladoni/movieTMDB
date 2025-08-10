@@ -1,14 +1,18 @@
-import Footer from "./components/footer/Footer";
-import Navbar from "./components/navbar/Navbar";
-import RoutePath from "./routes/RoutePath";
+import Footer from './components/footer/Footer'
+import Navbar from './components/navbar/Navbar'
+import RoutePath from './routes/RoutePath'
+import { ErrorBoundary } from './components/ErrorBoundary'
+
 const App = () => {
   return (
-    <div>
+    <>
       <Navbar />
-      <RoutePath />
+      <ErrorBoundary>
+        <RoutePath />
+      </ErrorBoundary>
       <Footer />
-    </div>
-  );
-};
+    </>
+  )
+}
 
-export default App;
+export default App

@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useState } from 'react'
 import { ImSearch } from 'react-icons/im'
 
 import MovieCard from '../../components/movieCard/MovieCard'
@@ -7,15 +7,24 @@ import { useGetAllSearchMovies } from '../../hooks/useSearchMovies'
 import * as SharedStyled from '../../styles/sharedStyles'
 import { debounce } from '../../utils/utils'
 import * as Styled from './Search.style'
+import { useSearchParams } from 'react-router-dom'
 
 const Search = () => {
+  const [searchParams, setSearchParams] = useSearchParams({})
+  const query = searchParams.get('q') || ''
   const [searchTab, setSearchTab] = useState('movies')
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState(query)
+
+  console.log('searchValue===[log]===>', searchValue)
+  // search params
 
   const handleChange = (e: any) => {
-    setSearchValue(e.target.value)
+    const searchQuery = e.target.value.trim()
+    if (searchQuery) {
+      setSearchParams({ q: searchQuery })
+      setSearchValue(searchQuery)
+    }
   }
-  const handleDebounce = debounce((e: any) => handleChange(e), 1000)
 
   const option = {
     searchValue: searchValue && encodeURIComponent(searchValue),
@@ -54,24 +63,34 @@ const Search = () => {
       <SharedStyled.Wrapper>
         <Styled.InputFieldWrapper>
           <Styled.InputField
-            type='text'
-            placeholder='Search Movies or TV Series. Example tom and jerry'
-            onChange={handleDebounce}
+            type='search'
+            placeholder='Search Movies or TV Series'
+            onChange={debounce((e: any) => handleChange(e), 1000)}
           />
-          <Styled.IconWrapper>
-            <ImSearch />
-          </Styled.IconWrapper>
+          {!searchValue && (
+            <Styled.IconWrapper>
+              <ImSearch />
+            </Styled.IconWrapper>
+          )}
         </Styled.InputFieldWrapper>
 
         <Styled.NavTabWrapper>
           <Styled.NavTab
-            onClick={() => setSearchTab('movies')}
+            onClick={() => {
+              setSearchTab('movies')
+              setSearchParams({})
+              setSearchValue('')
+            }}
             tab={searchTab === 'movies'}
           >
             Search Movies
           </Styled.NavTab>
           <Styled.NavTab
-            onClick={() => setSearchTab('tvseries')}
+            onClick={() => {
+              setSearchTab('tvseries')
+              setSearchParams({})
+              setSearchValue('')
+            }}
             tab={searchTab === 'tvseries'}
           >
             Search TV Series

@@ -10,9 +10,9 @@ import * as SharedStyled from '../../styles/sharedStyles'
 const Movies = () => {
   const [genres, setGenres] = useState([])
   const [selectedGenres, setSelectedGenres] = useState([])
-  const selectedData = selectedGenres
-    .map((results: any) => results?.id)
-    .join(',')
+
+  console.log('selectedGenres===[log]===>', selectedGenres)
+  const selectedData = selectedGenres?.join(',')
   const {
     data,
     isLoading,
@@ -44,7 +44,6 @@ const Movies = () => {
     <SharedStyled.Container width='90%'>
       <SharedStyled.OpacityAnimation>
         <SharedStyled.Wrapper>
-          <SharedStyled.HeadingTitle>MOVIES</SharedStyled.HeadingTitle>
           <SharedStyled.CategoryMainLayout>
             <Category
               type='movie'

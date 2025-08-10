@@ -4,12 +4,16 @@ import { apiUrl, api_key } from '../utils/apiUrl'
 
 const getAllSearchMovies = async ({ pageParam = 1, queryKey }: any) => {
   const options = queryKey[1]
+
+  const filters = JSON.parse(localStorage.getItem('discoverFilters') || '')
+
   const result = await axios.get(
     `${apiUrl}/search/${
       options?.searchTab === 'movies' ? 'movie' : 'tv'
     }?&language=en-US&query=${
       options?.searchValue === '' ? 'tom and jerry' : options?.searchValue
-    }&page=${pageParam}&include_adult=false`,
+    }&page=${pageParam}&include_adult=${filters?.include_adult}
+    `,
     {
       headers: {
         Authorization: `Bearer ${api_key}`,

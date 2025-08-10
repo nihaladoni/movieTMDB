@@ -1,8 +1,12 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { IoIosCloseCircle } from 'react-icons/io'
 
-import { CategoryContainer } from './Category.style'
+import { CategoryContainer, Summary } from './Category.style'
 import { useGetGenre } from '../../hooks/useGetGenre'
+import { Heading } from '../navbar/Navbar.style'
+import { Flex } from '../../styles/sharedStyles'
+import DiscoverFilter from '../filters/DiscoverFilter'
+import { api_key } from '../../utils/apiUrl'
 
 const Category = ({
   type,
@@ -12,50 +16,74 @@ const Category = ({
   setSelectedGenres,
 }: any) => {
   const { data: genreData } = useGetGenre(type)
+  const [showHiddenMenu, setShowHiddenMenu] = useState(false)
+  console.log('showHiddenMenu===[log]===>', showHiddenMenu)
+  const hideRef = useRef(null)
+  const dialogRef = useRef<HTMLDialogElement>(null)
 
   useEffect(() => {
     setGenres(genreData?.genres)
   }, [genreData])
 
-  const handleAddGenre = (genre: any) => {
-    setSelectedGenres([...selectedGenres, genre])
-    setGenres(genres?.filter((g: any) => g?.id !== genre?.id))
-  }
+  const handleCategoryClick = useCallback(
+    (id: number) => {
+      if (selectedGenres.includes(id)) {
+        setSelectedGenres(
+          selectedGenres.filter((genreId: number) => genreId !== id)
+        )
+      } else {
+        setSelectedGenres((prevSelected: any) => [...prevSelected, id])
+      }
+    },
+    [selectedGenres?.length]
+  )
+  const handleShowHiddenMenu = useCallback(() => {
+    ;(hideRef.current as any) = setTimeout(() => {
+      dialogRef.current?.showModal()
+    }, 3000)
+  }, [])
 
-  const handleRemoveGenre = (genre: any) => {
-    setSelectedGenres(
-      selectedGenres.filter((selected: any) => selected.id !== genre.id)
-    )
-    setGenres([...genres, genre])
+  const closeDialog = useCallback(() => {
+    if (dialogRef.current) {
+      dialogRef.current.close()
+    }
+  }, [])
+
+  const handleFilterChange = (filters: any) => {
+    console.log('Filters applied:', filters)
+    window.location.reload()
   }
 
   return (
     <>
-      {selectedGenres.map((genre: any) => (
-        <CategoryContainer
-          key={genre?.id}
-          onClick={() => handleRemoveGenre(genre)}
-        >
-          {genre?.name}
-          <IoIosCloseCircle
-            size={22}
-            style={{
-              marginLeft: '5px',
-              display: 'flex',
-              alignItems: 'center',
-              cursor: 'pointer',
-            }}
-          />
-        </CategoryContainer>
-      ))}
-      {genres?.map((genre: any) => (
-        <CategoryContainer
-          key={genre?.id}
-          onClick={() => handleAddGenre(genre)}
-        >
-          {genre?.name}
-        </CategoryContainer>
-      ))}
+      <details style={{ userSelect: 'none' }}>
+        <Flex flexWrap gap='10px' margin='16px 0'>
+          {genres?.map((genre: any) => (
+            <CategoryContainer
+              key={genre?.id}
+              onClick={() => handleCategoryClick(genre?.id)}
+              isSelected={selectedGenres.includes(genre?.id)}
+            >
+              {genre?.name}
+            </CategoryContainer>
+          ))}
+        </Flex>
+        <Summary>
+          <Heading
+            onMouseDown={handleShowHiddenMenu}
+            // onTouchStart={handleShowHiddenMenu}
+          >
+            Tags
+          </Heading>
+        </Summary>
+      </details>
+
+      <dialog ref={dialogRef}>
+        <DiscoverFilter
+          onClose={closeDialog}
+          onFilterChange={handleFilterChange}
+        />
+      </dialog>
     </>
   )
 }

@@ -3,8 +3,18 @@ import { useInfiniteQuery } from 'react-query'
 import { apiUrl, api_key } from '../utils/apiUrl'
 const getTvSeries = async ({ pageParam = 1, queryKey }: any) => {
   const selectedData = queryKey[1]
+
+  const filters = JSON.parse(localStorage.getItem('discoverFilters') || '')
+  const provider = filters?.with_watch_providers
+
   const result = await axios.get(
-    `${apiUrl}/discover/tv?&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageParam}&with_genres=${selectedData}&with_watch_monetization_types=flatrate`,
+    `${apiUrl}/discover/tv?&language=en-US&sort_by=${
+      filters?.sort_by
+    }&include_adult=${
+      filters?.include_adult
+    }&include_video=false&page=${pageParam}&with_genres=${selectedData}&with_original_language=${
+      filters?.with_original_language
+    }${provider ? `&with_watch_providers=${provider}` : ''}`,
     {
       headers: {
         Authorization: `Bearer ${api_key}`,

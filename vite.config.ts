@@ -10,8 +10,10 @@ export default defineConfig({
         name: 'MovieTMDB',
         short_name: 'MovieTMDB',
         description: 'MovieTMDB Application',
-        theme_color: '#ffffff',
-        start_url: '/',
+        display: 'standalone',
+        theme_color: '#000',
+        background_color: '#000',
+        start_url: '.',
         icons: [
           {
             src: 'pwa-192x192.png',

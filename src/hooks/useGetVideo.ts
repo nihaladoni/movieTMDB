@@ -15,9 +15,16 @@ const getVideo = async (options: any) => {
 }
 
 export const useGetVideo = (options: any) => {
-  const { data, isError, isLoading, isFetching } = useQuery(
-    ['video', options],
-    () => getVideo(options)
+  const {
+    data: allData,
+    isError,
+    isLoading,
+    isFetching,
+  } = useQuery(['video', options], () => getVideo(options))
+
+  const data = allData?.results?.find(
+    (video: any) => video.type === 'Trailer' && video.site === 'YouTube'
   )
+
   return { data, isError, isLoading, isFetching }
 }

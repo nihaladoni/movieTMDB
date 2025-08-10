@@ -61,7 +61,6 @@ export const InfoDiv = styled.div`
   p {
     padding-right: 0;
     font-size: 0.9rem;
-    color: red;
   }
 
   @media (min-width: 680px) {

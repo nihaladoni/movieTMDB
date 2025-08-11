@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { IoIosCloseCircle } from 'react-icons/io'
 
 import { CategoryContainer, Summary } from './Category.style'
 import { useGetGenre } from '../../hooks/useGetGenre'
 import { Heading } from '../navbar/Navbar.style'
 import { Flex } from '../../styles/sharedStyles'
-import DiscoverFilter from '../filters/DiscoverFilter'
-import { api_key } from '../../utils/apiUrl'
 
 const Category = ({
   type,
@@ -16,10 +13,6 @@ const Category = ({
   setSelectedGenres,
 }: any) => {
   const { data: genreData } = useGetGenre(type)
-  const [showHiddenMenu, setShowHiddenMenu] = useState(false)
-  console.log('showHiddenMenu===[log]===>', showHiddenMenu)
-  const hideRef = useRef(null)
-  const dialogRef = useRef<HTMLDialogElement>(null)
 
   useEffect(() => {
     setGenres(genreData?.genres)
@@ -37,22 +30,6 @@ const Category = ({
     },
     [selectedGenres?.length]
   )
-  const handleShowHiddenMenu = useCallback(() => {
-    ;(hideRef.current as any) = setTimeout(() => {
-      dialogRef.current?.showModal()
-    }, 3000)
-  }, [])
-
-  const closeDialog = useCallback(() => {
-    if (dialogRef.current) {
-      dialogRef.current.close()
-    }
-  }, [])
-
-  const handleFilterChange = (filters: any) => {
-    console.log('Filters applied:', filters)
-    window.location.reload()
-  }
 
   return (
     <>
@@ -69,21 +46,9 @@ const Category = ({
           ))}
         </Flex>
         <Summary>
-          <Heading
-            onMouseDown={handleShowHiddenMenu}
-            // onTouchStart={handleShowHiddenMenu}
-          >
-            Tags
-          </Heading>
+          <Heading>Tags</Heading>
         </Summary>
       </details>
-
-      <dialog ref={dialogRef}>
-        <DiscoverFilter
-          onClose={closeDialog}
-          onFilterChange={handleFilterChange}
-        />
-      </dialog>
     </>
   )
 }

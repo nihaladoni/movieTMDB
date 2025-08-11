@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { ImSearch } from 'react-icons/im'
 
 import MovieCard from '../../components/movieCard/MovieCard'
@@ -8,6 +8,7 @@ import * as SharedStyled from '../../styles/sharedStyles'
 import { debounce } from '../../utils/utils'
 import * as Styled from './Search.style'
 import { useSearchParams } from 'react-router-dom'
+import DiscoverFilter from '../../components/filters/DiscoverFilter'
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams({})
@@ -15,8 +16,8 @@ const Search = () => {
   const [searchTab, setSearchTab] = useState('movies')
   const [searchValue, setSearchValue] = useState(query)
 
-  console.log('searchValue===[log]===>', searchValue)
-  // search params
+  const hideRef = useRef(null)
+  const dialogRef = useRef<HTMLDialogElement>(null)
 
   const handleChange = (e: any) => {
     const searchQuery = e.target.value.trim()
@@ -58,20 +59,49 @@ const Search = () => {
     }
   }, [fetchNextPage, hasNextPage])
 
+  const closeDialog = useCallback(() => {
+    if (dialogRef.current) {
+      clearTimeout(hideRef.current as any)
+      dialogRef.current.close()
+    }
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(hideRef.current as any)
+    }
+  }, [])
+
+  const handleFilterChange = (filters: any) => {
+    console.log('Filters applied:', filters)
+    window.location.reload()
+  }
+
+  const handleShowHiddenMenu = useCallback(() => {
+    ;(hideRef.current as any) = setTimeout(() => {
+      dialogRef.current?.showModal()
+    }, 3000)
+  }, [])
+
   return (
     <SharedStyled.Container width='90%'>
       <SharedStyled.Wrapper>
         <Styled.InputFieldWrapper>
           <Styled.InputField
-            type='search'
+            type='text'
             placeholder='Search Movies or TV Series'
             onChange={debounce((e: any) => handleChange(e), 1000)}
           />
-          {!searchValue && (
-            <Styled.IconWrapper>
-              <ImSearch />
-            </Styled.IconWrapper>
-          )}
+
+          <Styled.IconWrapper
+            style={{
+              cursor: 'pointer',
+              userSelect: 'none',
+            }}
+            onMouseDown={handleShowHiddenMenu}
+          >
+            <ImSearch />
+          </Styled.IconWrapper>
         </Styled.InputFieldWrapper>
 
         <Styled.NavTabWrapper>
@@ -179,6 +209,13 @@ const Search = () => {
           </div>
         )}
       </SharedStyled.Wrapper>
+
+      <dialog ref={dialogRef}>
+        <DiscoverFilter
+          onClose={closeDialog}
+          onFilterChange={handleFilterChange}
+        />
+      </dialog>
     </SharedStyled.Container>
   )
 }

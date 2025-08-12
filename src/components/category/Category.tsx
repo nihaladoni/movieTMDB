@@ -19,10 +19,10 @@ const Category = ({
   }, [genreData])
 
   const handleCategoryClick = useCallback(
-    (id: number) => {
+    (id: string) => {
       if (selectedGenres.includes(id)) {
         setSelectedGenres(
-          selectedGenres.filter((genreId: number) => genreId !== id)
+          selectedGenres.filter((genreId: string) => genreId !== id)
         )
       } else {
         setSelectedGenres((prevSelected: any) => [...prevSelected, id])
@@ -38,8 +38,8 @@ const Category = ({
           {genres?.map((genre: any) => (
             <CategoryContainer
               key={genre?.id}
-              onClick={() => handleCategoryClick(genre?.id)}
-              isSelected={selectedGenres.includes(genre?.id)}
+              onClick={() => handleCategoryClick(String(genre?.id))}
+              isSelected={selectedGenres.includes(String(genre?.id))}
             >
               {genre?.name}
             </CategoryContainer>

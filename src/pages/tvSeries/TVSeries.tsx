@@ -5,20 +5,18 @@ import MovieCard from '../../components/movieCard/MovieCard'
 import NoItemFound from '../../components/noItemFound/NoItemFound'
 import { useTvSeries } from '../../hooks/useTvSeries'
 import * as SharedStyled from '../../styles/sharedStyles'
-import { useSearchParams } from 'react-router-dom'
 
 const TVSeries = () => {
   const [genres, setGenres] = useState([])
-  const [selectedGenres, setSelectedGenres] = useState<number[]>([])
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([])
+
+  const filterData = JSON.parse(localStorage.getItem('discoverFilters') || '[]')
 
   useEffect(() => {
-    if (selectedGenres?.length) {
-      setSearchParams({ genres: encodeURIComponent(selectedGenres.join(',')) })
-    } else {
-      setSearchParams({})
+    if (filterData?.with_tv_genres?.length) {
+      setSelectedGenres(filterData?.with_tv_genres)
     }
-  }, [selectedGenres?.length])
+  }, [filterData?.with_tv_genres?.length])
 
   const selectedData = selectedGenres?.join(',')
   const {

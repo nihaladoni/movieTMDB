@@ -11,7 +11,14 @@ const Movies = () => {
   const [genres, setGenres] = useState([])
   const [selectedGenres, setSelectedGenres] = useState([])
 
-  console.log('selectedGenres===[log]===>', selectedGenres)
+  const filterData = JSON.parse(localStorage.getItem('discoverFilters') || '[]')
+
+  useEffect(() => {
+    if (filterData?.with_movie_genres?.length) {
+      setSelectedGenres(filterData?.with_movie_genres)
+    }
+  }, [filterData?.with_movie_genres?.length])
+
   const selectedData = selectedGenres?.join(',')
   const {
     data,

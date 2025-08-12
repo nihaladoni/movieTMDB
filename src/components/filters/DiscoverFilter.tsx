@@ -11,6 +11,7 @@ import {
 import { Flex } from '../../styles/sharedStyles'
 import { useGetProviders } from '../../hooks/useGetPoviders'
 import { useGetLanguages } from '../../hooks/useGetLanguages'
+import { useGetGenre } from '../../hooks/useGetGenre'
 
 const sortOptions = [
   { value: 'popularity.desc', label: 'Popularity Descending' },
@@ -49,13 +50,23 @@ export default function DiscoverFilter({
 
   const { data: watchProviders } = useGetProviders()
   const { data: languages } = useGetLanguages()
+  const { data: movieGenresData } = useGetGenre('movie')
+  const { data: tvGenresData } = useGetGenre('tv')
 
-  console.log('TEST===[log]===>', {
-    watchProviders,
-  })
+  const movieGenres = movieGenresData?.genres
+  const tvGenres = tvGenresData?.genres
+
   const [selectedWatchProvider, setSelectedWatchProvider] = useState(
     savedFilters.with_watch_providers || ''
   )
+
+  const [selectedMovieGenres, setSelectedMovieGenres] = useState(
+    savedFilters.with_movie_genres || []
+  )
+  const [selectedTvGenres, setSelectedTvGenres] = useState(
+    savedFilters.with_tv_genres || []
+  )
+
   const [includeAdult, setIncludeAdult] = useState(
     savedFilters.include_adult || false
   )
@@ -70,9 +81,18 @@ export default function DiscoverFilter({
       with_watch_providers: selectedWatchProvider,
       include_adult: includeAdult,
       with_original_language: originalLang,
+      with_movie_genres: selectedMovieGenres,
+      with_tv_genres: selectedTvGenres,
     }
     localStorage.setItem('discoverFilters', JSON.stringify(filtersToSave))
-  }, [sortBy, selectedWatchProvider, includeAdult, originalLang])
+  }, [
+    sortBy,
+    selectedWatchProvider,
+    includeAdult,
+    originalLang,
+    selectedMovieGenres,
+    selectedTvGenres,
+  ])
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
@@ -116,6 +136,52 @@ export default function DiscoverFilter({
                 </option>
               ))}
             </Select>
+
+            <div>
+              <Label>Movie Genres</Label>
+              <Select
+                id='movie_genres'
+                multiple
+                value={selectedMovieGenres}
+                onChange={e => {
+                  const selected = Array.from(
+                    e.target.selectedOptions,
+                    option => option.value
+                  )
+                  setSelectedMovieGenres(selected)
+                }}
+              >
+                <option value=''>Any</option>
+                {movieGenres?.map(({ id, name }: any) => (
+                  <option key={id} value={id}>
+                    {name}
+                  </option>
+                ))}
+              </Select>
+            </div>
+
+            <div>
+              <Label>TV Genres</Label>
+              <Select
+                id='tv_genres'
+                multiple
+                value={selectedTvGenres}
+                onChange={e => {
+                  const selected = Array.from(
+                    e.target.selectedOptions,
+                    option => option.value
+                  )
+                  setSelectedTvGenres(selected)
+                }}
+              >
+                <option value=''>Any</option>
+                {tvGenres?.map(({ id, name }: any) => (
+                  <option key={id} value={id}>
+                    {name}
+                  </option>
+                ))}
+              </Select>
+            </div>
           </div>
           <CheckboxLabel htmlFor='include_adult'>
             <Checkbox
